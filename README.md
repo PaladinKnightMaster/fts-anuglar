@@ -6,9 +6,14 @@ This project is a code assessment for FTS. It is built using Angular and include
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.7.
 
+## Screen
+
+![](https://github.com/PaladinKnightMaster/fts-angular/screen-capture.gif)
+
 ## Table of Contents
 
 - [Description](#description)
+- [Screen](#screen)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Testing](#testing)
