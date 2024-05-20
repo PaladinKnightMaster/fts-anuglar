@@ -8,7 +8,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Screen
 
-![](https://github.com/PaladinKnightMaster/fts-angular/screen-capture.gif)
+![](https://github.com/PaladinKnightMaster/fts-anuglar/blob/master/screen-capture.gif)
 
 ## Table of Contents
 
