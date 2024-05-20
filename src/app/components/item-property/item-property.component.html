@@ -1,0 +1,19 @@
+<div class="property">
+  <input
+    type="checkbox"
+    class="property__checkbox"
+    [id]="itemId + '_' + property.sizeId"
+    (change)="toggleCheckbox($event)"
+    [checked]="property.isChecked"
+  />
+  <label class="property__label" [for]="itemId + '_' + property.sizeId">{{
+    property.sizeName
+  }}</label>
+  <div class="property__input">
+    <fts-currency-input
+      [disabled]="!property.isChecked"
+      [price]="property.isChecked ? property.price : 0.0"
+      (changePriceEvent)="changePrice($event)"
+    ></fts-currency-input>
+  </div>
+</div>

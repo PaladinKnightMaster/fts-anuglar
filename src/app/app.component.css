@@ -1,0 +1,17 @@
+.main {
+  margin: 40px 20px;
+  min-height: 200px;
+  height: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.main > .container {
+  width: 700px;
+}
+
+.main > .container > .item-list-container {
+  margin-top: 2rem;
+}

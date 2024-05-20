@@ -1,0 +1,22 @@
+.currency-input {
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid #6190a8;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.currency-input > .currency-input__currency {
+  color: white;
+  align-items: center;
+  padding: 0.7rem 0.75rem;
+  background-color: #6190a8;
+}
+
+.currency-input > .currency-input__input {
+  padding: 0.7rem 0.75rem;
+  border-radius: 0px 4px 4px 0px;
+  font-size: 16px;
+  width: 2rem;
+}

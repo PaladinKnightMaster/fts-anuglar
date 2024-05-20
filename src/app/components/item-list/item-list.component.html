@@ -1,0 +1,13 @@
+<div class="item-list">
+  <ng-container *ngIf="(items$ | async) as items">
+    <ng-container *ngIf="items.length > 0; else loading">
+      <fts-item
+        *ngFor="let item of items"
+        [isActive]="(selectedItem$ | async) === item.originItem.itemId"
+        [item]="item"
+        (clickItemEvent)="selectItem($event)"
+      ></fts-item>
+    </ng-container>
+  </ng-container>
+  <ng-template #loading>loading...</ng-template>
+</div>

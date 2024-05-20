@@ -1,0 +1,44 @@
+/* You can add global styles to this file, and also import other style files */
+@import "bootstrap-icons/font/bootstrap-icons.css";
+/* Remove padding and margin */
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* prevent iOS font size change */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* reset body line-height */
+body {
+  line-height: 1;
+  text-rendering: optimizeSpeed;
+}
+
+/* reset checkbox and radio style */
+[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+[type="checkbox"],
+[type="radio"] :focus {
+  outline: 0;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  display: none;
+}
+
+input {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input:focus {
+  outline: 0;
+}

@@ -1,0 +1,15 @@
+<div class="currency-input">
+  <div class="currency-input__currency">
+    <span class="currency-input__currency--symbol">$</span>
+  </div>
+  <input
+    class="currency-input__input"
+    type="number"
+    step=".01"
+    pattern="[0-9]+([\.,][0-9]+)?"
+    [disabled]="disabled"
+    [(ngModel)]="price == 0 ? price.toFixed(2) : price"
+    (keydown)="blockInvalidChar($event)"
+    (change)="changeValue($event)"
+  />
+</div>

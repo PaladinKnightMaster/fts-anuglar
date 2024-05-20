@@ -1,0 +1,28 @@
+<div class="item" [ngClass]="isActive ? 'item--active' : 'item--collapse'">
+  <div class="item__header" (click)="clickItem(item.originItem.itemId)">
+    <i
+      class="bi bi-chevron-down"
+      [ngClass]="isActive ? 'item__arrow--active' : 'item__arrow--collapse'"
+    ></i>
+    <span class="item__header__title"> {{ item.originItem.name }} </span>
+  </div>
+  <div
+    class="item__body"
+    [ngClass]="isActive ? 'item__body--active' : 'item__body--collapse'"
+  >
+    <div class="item__body__content">
+      <div class="item__body__content__properties">
+        <fts-item-property
+          *ngFor="let property of item.properties"
+          [itemId]="item.originItem.itemId"
+          [property]="property"
+        />
+      </div>
+      <div class="item__body__btn--undo">
+        <button *ngIf="item.changed" class="undo-btn" (click)="undoChanges()">
+          <i class="bi bi-arrow-counterclockwise undo-btn__icon"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
