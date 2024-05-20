@@ -13,7 +13,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [Usage](#usage)
 - [Testing](#testing)
 - [Project Structure](#project-structure)
-- [Author](#author)
 - [License](#license)
 
 ## Installation
@@ -88,9 +87,6 @@ fts-angular/
 ├── tsconfig.json
 ├── tsconfig.spec.json
 ```
-
-## Author
-James Lee Hamlett
 
 ## License
 This project is licensed under the UNLICENSED license.
