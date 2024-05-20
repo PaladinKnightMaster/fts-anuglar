@@ -20,91 +20,64 @@ export const initialState: ItemState = {
   selectedItem: -1,
 };
 
+const updateProperties = (properties: Property[], payload: any) => 
+  properties.map(property => 
+    property.sizeId === payload.sizeId 
+      ? { ...property, price: payload.price, isChecked: payload.isChecked } 
+      : property
+  );
+
+const findItemAndUpdate = (items: Item[], payload: any) => 
+  items.map(item => 
+    item.originItem.itemId === payload.itemId 
+      ? { ...item, properties: updateProperties(item.properties, payload) } 
+      : item
+  );
+
+const markChangedItems = (items: Item[], prevItems: Item[] | null) => {
+  if (!prevItems) return items;
+  return items.map(item => {
+    const prevItem = prevItems.find(prev => prev.originItem.itemId === item.originItem.itemId);
+    if (prevItem) {
+      const changed = item.properties.some(prop => {
+        const prevProp = prevItem.properties.find(prevProp => prevProp.sizeId === prop.sizeId);
+        return !prevProp || prop.price !== prevProp.price || prop.isChecked !== prevProp.isChecked;
+      });
+      return { ...item, changed };
+    }
+    return item;
+  });
+};
+
 export const itemReducer = createReducer(
   initialState,
   on(setItems, (state, { items }) => ({ ...state, items })),
 
   on(setSelectedItem, (state, { selectedItem }) => ({
     ...state,
-    selectedItem: state.selectedItem == selectedItem ? -1 : selectedItem,
+    selectedItem: state.selectedItem === selectedItem ? -1 : selectedItem,
   })),
 
   on(updatePrice, (state, payload) => {
-    const tempItems: Item[] = [];
-
-    state.items.forEach((currentItem) => {
-      if (currentItem.originItem.itemId == payload.itemId) {
-        const tempProperties: Property[] = [];
-        currentItem.properties.forEach((property) => {
-          if (property.sizeId == payload.sizeId) {
-            tempProperties.push({
-              ...property,
-              price: payload.price,
-              isChecked: payload.isChecked,
-            });
-          } else {
-            tempProperties.push({ ...property });
-          }
-        });
-        tempItems.push({ ...currentItem, properties: tempProperties });
-      } else {
-        tempItems.push({ ...currentItem });
-      }
-    });
-
-    // Check if the data is changed
-    const prevItem = state.prevItems?.find(
-      (item) => item.originItem.itemId == payload.itemId
-    );
-    if (prevItem) {
-      const item = tempItems.find(
-        (currentItem) =>
-          currentItem.originItem.itemId == prevItem.originItem.itemId
-      );
-      if (item) {
-        let changed = false;
-        item.properties.forEach((itemProperty) => {
-          const prevItemProperty = prevItem.properties.find(
-            (prevProperty) => prevProperty.sizeId == itemProperty.sizeId
-          );
-
-          if (
-            !(
-              itemProperty?.price == prevItemProperty?.price &&
-              itemProperty?.isChecked == prevItemProperty?.isChecked
-            )
-          ) {
-            changed = true;
-          }
-          item.changed = changed;
-        });
-      }
-    }
-    return { ...state, items: tempItems };
+    const updatedItems = findItemAndUpdate(state.items, payload);
+    const markedItems = markChangedItems(updatedItems, state.prevItems);
+    return { ...state, items: markedItems };
   }),
 
   on(setPrevItems, (state, { prevItems }) => ({
     ...state,
-    prevItems: prevItems,
+    prevItems,
   })),
 
   on(undoChanges, (state, { itemId }) => {
-    const prevItem = state.prevItems?.find(
-      (item) => item.originItem.itemId == itemId
-    );
-    if (prevItem) {
-      const tempItems: Item[] = [];
+    if (!state.prevItems) return state;
+    const prevItem = state.prevItems.find(item => item.originItem.itemId === itemId);
+    if (!prevItem) return state;
 
-      state.items.forEach((currentItem) => {
-        if (currentItem.originItem.itemId == prevItem.originItem.itemId) {
-          tempItems.push({ ...prevItem });
-        } else {
-          tempItems.push({ ...currentItem });
-        }
-      });
-      return { ...state, items: tempItems };
-    } else {
-      return state;
-    }
+    const updatedItems = state.items.map(item => 
+      item.originItem.itemId === itemId ? { ...prevItem } : item
+    );
+
+    return { ...state, items: updatedItems };
   })
 );
