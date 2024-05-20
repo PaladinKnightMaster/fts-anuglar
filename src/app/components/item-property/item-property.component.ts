@@ -6,6 +6,11 @@ import { ItemState } from '@/store/item/item.reducer';
 import { updatePrice } from '@/store/item/item.actions';
 import { Property } from '@/models/data.model';
 
+/**
+ * The `ItemPropertyComponent` is a standalone Angular component that provides a reusable UI element for displaying and editing item properties.
+ * It imports the `CurrencyInputComponent` and `DecimalPipe` to handle currency input and formatting.
+ * The component is defined with the `fts-item-property` selector and uses the `item-property.component.html` template and `item-property.component.css` styles.
+ */
 @Component({
   selector: 'fts-item-property',
   standalone: true,
@@ -13,12 +18,21 @@ import { Property } from '@/models/data.model';
   templateUrl: './item-property.component.html',
   styleUrl: './item-property.component.css',
 })
+/**
+ * The `ItemPropertyComponent` is a UI component that represents a single property of an item.
+ * It is responsible for rendering the property value and handling any user interactions with the property.
+ */
 export class ItemPropertyComponent {
   @Input() itemId: number = 0;
   @Input() property!: Property;
 
   constructor(private store: Store<ItemState>) {}
 
+  /**
+   * Toggles the checkbox state for the item property and updates the price accordingly.
+   *
+   * @param $event - The event object from the checkbox click.
+   */
   toggleCheckbox($event: Event) {
     this.store.dispatch(
       updatePrice({
@@ -30,6 +44,11 @@ export class ItemPropertyComponent {
     );
   }
 
+  /**
+   * Updates the price of the item property.
+   *
+   * @param price - The new price for the item property.
+   */
   changePrice(price: number) {
     this.store.dispatch(
       updatePrice({

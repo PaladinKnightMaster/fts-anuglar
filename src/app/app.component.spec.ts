@@ -6,6 +6,11 @@ import { ItemListComponent } from './components/item-list/item-list.component';
 import { routes } from './app.routes'; // Import your routes if you have a routing module
 import { ItemState } from './store/item/item.reducer';
 
+/**
+ * Test suite for the `AppComponent`.
+ *
+ * This test suite verifies the behavior of the `AppComponent`, including its creation, title, and rendering.
+ */
 describe('AppComponent', () => {
   let store: MockStore<ItemState>;
   const initialState: ItemState = {
@@ -22,7 +27,7 @@ describe('AppComponent', () => {
       ],
       providers: [
         provideRouter(routes), // Provide router with routes
-        provideMockStore({ initialState })
+        provideMockStore({ initialState }),
       ],
     }).compileComponents();
 

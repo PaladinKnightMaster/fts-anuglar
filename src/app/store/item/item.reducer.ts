@@ -20,28 +20,57 @@ export const initialState: ItemState = {
   selectedItem: -1,
 };
 
-const updateProperties = (properties: Property[], payload: any) => 
-  properties.map(property => 
-    property.sizeId === payload.sizeId 
-      ? { ...property, price: payload.price, isChecked: payload.isChecked } 
+/**
+ * Updates the properties of an item by mapping over the provided properties array and updating the price and isChecked properties for the property with the matching sizeId.
+ *
+ * @param properties - The array of properties to update.
+ * @param payload - An object containing the sizeId, price, and isChecked values to update.
+ * @returns A new array of properties with the updated values.
+ */
+const updateProperties = (properties: Property[], payload: any) =>
+  properties.map((property) =>
+    property.sizeId === payload.sizeId
+      ? { ...property, price: payload.price, isChecked: payload.isChecked }
       : property
   );
 
-const findItemAndUpdate = (items: Item[], payload: any) => 
-  items.map(item => 
-    item.originItem.itemId === payload.itemId 
-      ? { ...item, properties: updateProperties(item.properties, payload) } 
+/**
+ * Updates the properties of an item in the given array of items.
+ *
+ * @param items - The array of items to update.
+ * @param payload - The payload containing the item ID and the updated properties.
+ * @returns A new array of items with the updated properties.
+ */
+const findItemAndUpdate = (items: Item[], payload: any) =>
+  items.map((item) =>
+    item.originItem.itemId === payload.itemId
+      ? { ...item, properties: updateProperties(item.properties, payload) }
       : item
   );
 
+/**
+ * Marks items as changed based on a comparison with previous items.
+ *
+ * @param items - The current items to be marked.
+ * @param prevItems - The previous items to compare against.
+ * @returns The items with the 'changed' property set as appropriate.
+ */
 const markChangedItems = (items: Item[], prevItems: Item[] | null) => {
   if (!prevItems) return items;
-  return items.map(item => {
-    const prevItem = prevItems.find(prev => prev.originItem.itemId === item.originItem.itemId);
+  return items.map((item) => {
+    const prevItem = prevItems.find(
+      (prev) => prev.originItem.itemId === item.originItem.itemId
+    );
     if (prevItem) {
-      const changed = item.properties.some(prop => {
-        const prevProp = prevItem.properties.find(prevProp => prevProp.sizeId === prop.sizeId);
-        return !prevProp || prop.price !== prevProp.price || prop.isChecked !== prevProp.isChecked;
+      const changed = item.properties.some((prop) => {
+        const prevProp = prevItem.properties.find(
+          (prevProp) => prevProp.sizeId === prop.sizeId
+        );
+        return (
+          !prevProp ||
+          prop.price !== prevProp.price ||
+          prop.isChecked !== prevProp.isChecked
+        );
       });
       return { ...item, changed };
     }
@@ -49,6 +78,11 @@ const markChangedItems = (items: Item[], prevItems: Item[] | null) => {
   });
 };
 
+/**
+ * The item reducer manages the state of items in the application.
+ * It handles actions for setting items, selecting an item, updating item prices,
+ * setting previous item states, and undoing changes to items.
+ */
 export const itemReducer = createReducer(
   initialState,
   on(setItems, (state, { items }) => ({ ...state, items })),
@@ -70,11 +104,13 @@ export const itemReducer = createReducer(
   })),
 
   on(undoChanges, (state, { itemId }) => {
-    if (!state.prevItems) return state;
-    const prevItem = state.prevItems.find(item => item.originItem.itemId === itemId);
+    if (!state?.prevItems) return state;
+    const prevItem = state.prevItems.find(
+      (item) => item.originItem.itemId === itemId
+    );
     if (!prevItem) return state;
 
-    const updatedItems = state.items.map(item => 
+    const updatedItems = state.items.map((item) =>
       item.originItem.itemId === itemId ? { ...prevItem } : item
     );
 

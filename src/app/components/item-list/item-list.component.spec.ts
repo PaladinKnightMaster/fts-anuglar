@@ -9,6 +9,15 @@ import { Observable, of } from 'rxjs';
 import { Item } from '@/models/data.model';
 import { By } from '@angular/platform-browser';
 
+/**
+ * This test suite verifies the functionality of the `ItemListComponent`.
+ * It sets up a mock store, mocks the observable data, and tests the following scenarios:
+ * - The component is created successfully.
+ * - The loading template is displayed when items are not yet loaded or the items array is empty.
+ * - The item components are displayed when items are loaded.
+ * - The selected item is highlighted correctly.
+ * - The `setSelectedItem` action is dispatched when an item is clicked.
+ */
 describe('ItemListComponent', () => {
   let component: ItemListComponent;
   let fixture: ComponentFixture<ItemListComponent>;
@@ -16,6 +25,12 @@ describe('ItemListComponent', () => {
   let mockSelectedItem$: Observable<number>;
   let mockItems$: Observable<Item[]>;
 
+  /**
+   * Defines the initial state of the `ItemState` object, which includes an array of `items` with specific properties, a `prevItems` property, and a `selectedItem` property.
+   *
+   * The `items` array contains two objects, each with an `originItem` property (with `itemId` and `name` fields), an empty `properties` array, and a `changed` property set to `false`.
+   * The `prevItems` property is set to `null`, and the `selectedItem` property is set to `-1`.
+   */
   const initialState: ItemState = {
     items: [
       {
@@ -58,17 +73,17 @@ describe('ItemListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-it('should display loading template when items are not yet loaded or items array is empty', () => {
-  // Set selectedItem$ to an observable emitting 0 to simulate loading state
-  component.items$ = of([])
-  fixture.detectChanges();
+  it('should display loading template when items are not yet loaded or items array is empty', () => {
+    // Set items$ to an observable emitting [] to simulate loading state
+    component.items$ = of([]);
+    fixture.detectChanges();
 
-  console.log(fixture.debugElement)
-
-  // Check if the loading text is present
-  const loadingElement = fixture.debugElement.query(By.css('.item-list')).nativeElement;
-  expect(loadingElement.textContent).toContain('loading...');
-});
+    // Check if the loading text is present
+    const loadingElement = fixture.debugElement.query(
+      By.css('.item-list')
+    ).nativeElement;
+    expect(loadingElement.textContent).toContain('loading...');
+  });
 
   it('should display item components when items are loaded', () => {
     component.items$ = mockItems$;
