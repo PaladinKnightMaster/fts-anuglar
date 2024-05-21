@@ -10,6 +10,15 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ![](https://github.com/PaladinKnightMaster/fts-anuglar/blob/master/screen-capture.gif)
 
+
+## Solutions
+
+- Followed the atomic design (https://atomicdesign.bradfrost.com/chapter-2/)
+- BEM naming convention with Pure CSS (https://getbem.com/naming/)
+- Centralized state management using NgRx (https://ngrx.io/docs)
+- Implemented hydration using Meta-Reducer
+- Unit Testing (average coverage 99%)
+
 ## Table of Contents
 
 - [Description](#description)
