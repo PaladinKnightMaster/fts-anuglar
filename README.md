@@ -11,7 +11,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ![](https://github.com/PaladinKnightMaster/fts-anuglar/blob/master/screen-capture.gif)
 
 
-## Solutions
+## Solution
 
 - Followed the atomic design (https://atomicdesign.bradfrost.com/chapter-2/)
 - BEM naming convention with Pure CSS (https://getbem.com/naming/)
@@ -23,6 +23,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 - [Description](#description)
 - [Screen](#screen)
+- [Solution](#solution)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Testing](#testing)
